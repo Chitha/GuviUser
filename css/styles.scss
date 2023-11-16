@@ -1,0 +1,46 @@
+/* Import Bootstrap SCSS */
+@import 'bootstrap/scss/bootstrap';
+
+/* Custom Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+.container {
+    max-width: 800px;
+    margin: 50px auto;
+    text-align: center;
+}
+
+h1 {
+    color: #007bff;
+}
+
+p {
+    font-size: 1.2rem;
+}
+
+.links {
+    margin-top: 20px;
+
+    a {
+        margin: 0 10px;
+    }
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .container {
+        margin: 30px auto;
+    }
+
+    h1 {
+        font-size: 2rem;
+    }
+
+    p {
+        font-size: 1rem;
+    }
+}
