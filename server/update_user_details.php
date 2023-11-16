@@ -1,17 +1,6 @@
 <?php
 // updateProfile.php
-
-// Include the database connection
-$servername = 'localhost';
-$dbname = 'guviuser';
-$dbusername = 'chith';
-$dbpassword = '@Nathan16';
-    $conn = new mysqli($servername, $dbusername, $dbpassword,$dbname);
-
-    // Check connection
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
+include_once 'db.php';
 
 session_start();
 
@@ -27,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_SESSION['username'])) {
     
     $stmt->execute();
      
-
+    addUserToJsonFile($username, $newEmail);
     $stmt->close();
     $conn->close();
      

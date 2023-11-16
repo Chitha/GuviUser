@@ -1,10 +1,10 @@
 <?php
 // Include necessary files for database connection and configuration
-include_once 'config.php';
-include_once 'db.php';  
+ 
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+     
     // Process form data
     $username = $_POST['username'];
     $password = password_hash($_POST['password'], PASSWORD_DEFAULT); // Hash the password
@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Save to the database
     saveToDatabase($username, $password, $email);
-
+    addUserToJsonFile($username, $email);
     // Return success response
     $response = ['status' => 'success', 'message' => 'Signup successful!'];
     header('Content-Type: application/json');
@@ -30,16 +30,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     exit;
 }
 
+function addUserToJsonFile($userName, $email) {
+    $userData = json_decode(file_get_contents('users.json'), true);
+
+    $newUser = [
+        'UserName' => $userName,
+        'Email' => $email,
+    ];
+
+    $userData[] = $newUser;
+
+    file_put_contents('users.json', json_encode($userData, JSON_PRETTY_PRINT));
+}
  
  
 // Placeholder function to save user data to the database
 function saveToDatabase($username, $password, $email)
-{ 
+{  
     $servername = 'localhost';
 $dbname = 'guviuser';
 $dbusername = 'chith';
 $dbpassword = '@Nathan16';
-    $conn = new mysqli($servername, $dbusername, $dbpassword,$dbname);
+
+$conn = new mysqli($servername, $dbusername, $dbpassword,$dbname);
 
     // Check connection
     if ($conn->connect_error) {
@@ -60,16 +73,8 @@ $dbpassword = '@Nathan16';
 // Placeholder function to check if a username is available
 function isUsernameAvailable($username)
 {
-    $servername = 'localhost';
-$dbname = 'guviuser';
-$dbusername = 'chith';
-$dbpassword = '@Nathan16';
-    $conn = new mysqli($servername, $dbusername, $dbpassword,$dbname);
-
-    // Check connection
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }  
+    include_once 'config.php';
+    include_once 'db.php';  
 
     // You should use prepared statements to prevent SQL injection
     $stmt = $conn->prepare("SELECT * FROM users WHERE username = ?");

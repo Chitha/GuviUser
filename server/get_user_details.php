@@ -1,17 +1,9 @@
 <?php
+
 // Placeholder function to get user details from the database
 function getUserDetails()
 {
-    $servername = 'localhost';
-$dbname = 'guviuser';
-$dbusername = 'chith';
-$dbpassword = '@Nathan16';
-    $conn = new mysqli($servername, $dbusername, $dbpassword,$dbname);
-
-    // Check connection
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
+    include_once 'db.php';
     session_start();
 // Check if the 'username' is set in the session
 if (isset($_SESSION['user_id'])) {

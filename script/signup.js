@@ -20,6 +20,7 @@ $(document).ready(function () {
                 }
             },
             error: function (xhr, status, error) {
+                window.location.href = '../html/Login.html';
                 console.log(xhr.responseText);
                 console.log(status);
                 console.log(error);
