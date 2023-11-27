@@ -54,9 +54,7 @@ $dbpassword = '@Nathan16';
         
        
        
-       $redis = new Predis\Client();
- 
-
+       $redis = new Predis\Client(); 
 
 // Generate session ID and expiration time
 $sessionId = session_id();;
@@ -65,9 +63,7 @@ $expirationTimeInSeconds = 3600; // Example: 1 hour
 // Store session data
 $sessionData = array('user_id' => $user['id'], 'username' => $user['username']);
 $redis->setex($sessionId, $expirationTimeInSeconds, json_encode($sessionData));
-
  
-
             return true;
         }
     }
