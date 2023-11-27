@@ -31,7 +31,9 @@ $(document).ready(function () {
                 $('#userDetails').html('<p>Error retrieving user details.</p>');
             }
         },
-        error: function () {
+        error: function (xhr, status, error) {
+            alert(xhr.responseText);
+            alert(error);
             // Handle error
             $('#userDetails').html('<p>An error occurred during the Ajax request.</p>');
         }

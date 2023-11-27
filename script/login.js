@@ -12,12 +12,13 @@ $(document).ready(function () {
             success: function (response) {
                 // Handle success response
                 $('#loginMessage').text(response.message);
-                if (response.status === 'success') {
-                    // Redirect to the profile page or perform other actions on successful login
-                     window.location.href = '../server/profile.php';
-                }
+                 if (response.status === 'success') {
+                     // Redirect to the profile page or perform other actions on successful login
+                      window.location.href = '../server/home.php';
+                 }
             },
             error: function (xhr, status, error) {
+                alert(xhr.responseText);
                 console.log(xhr.responseText);
                 console.log(status);
                 console.log(error);

@@ -2,8 +2,13 @@
 // Include necessary files for database connection and configuration
 include_once 'config.php';
 include_once 'db.php';
- 
- 
+require '../vendor/autoload.php';
+
+Predis\Autoloader::register();
+
+
+
+$client = new Predis\Client();
  
 // Placeholder function to verify login credentials
 function verifyLogin($username, $password)
@@ -41,9 +46,27 @@ $dbpassword = '@Nathan16';
             // Start a session
          session_start();
 
+
+
+
          // Store user information in the session
-         $_SESSION['username'] = $user['username'];
-         $_SESSION['user_id'] = $user['id']; // Include any other relevant information
+
+        
+       
+       
+       $redis = new Predis\Client();
+ 
+
+
+// Generate session ID and expiration time
+$sessionId = session_id();;
+$expirationTimeInSeconds = 3600; // Example: 1 hour
+
+// Store session data
+$sessionData = array('user_id' => $user['id'], 'username' => $user['username']);
+$redis->setex($sessionId, $expirationTimeInSeconds, json_encode($sessionData));
+
+ 
 
             return true;
         }
@@ -75,4 +98,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     echo json_encode($response);
     exit;
 }
+
+ 
 ?>
